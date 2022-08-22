@@ -11,10 +11,12 @@ const App: FC = () => {
   const {visualize, stopVisualize, resetCanvas} = useAudioVisualization('#canvas', 50);
 
   const [curtTime, setCurtTime] = useState<string>('00:00');
-  const [curtAudio, setCurtAudio] = useState<PlayListItem>(defaultPlayList[0]);
   const [playList, setPlayList] = useState<PlayListItem[]>(defaultPlayList);
+  const [playIndex, setPlayIndex] = useState<number>(0)
 
+  const intervalRef = useRef<NodeJS.Timeout>();
   const audioRef = useRef<HTMLAudioElement>(null);
+  const curtAudio = playList[playIndex]
 
   const onPlay = async () => {
     if (audioRef.current) {
@@ -36,29 +38,53 @@ const App: FC = () => {
       const [file] = e.target.files;
       const blobUrl = URL.createObjectURL(file);
       const [filename] = file.name.split('.');
-      setCurtAudio({ name: filename, url: blobUrl });
       setPlayList([...playList, { name: filename, url: blobUrl }])
+      setPlayIndex(playList.length - 1)
     }
   };
+
+  const setPlayProgress = (currentTime: number) => {
+    const minute = Math.floor(currentTime / 60);
+    const seconds = Math.floor(currentTime % 60);
+    setCurtTime(`${padLeft(minute)}:${padLeft(seconds)}`);
+  }
+
+  const toPlayNext = () => {
+    if (playIndex < playList.length - 1) {
+        setPlayIndex(playIndex + 1);
+    } else {
+        setPlayIndex(0);
+    }
+  }
+
+  const startTimer = () => {
+    // Clear any timers already running
+    clearInterval(intervalRef.current);
+
+    intervalRef.current = setInterval(() => {
+      if (audioRef.current) {
+        if (audioRef.current.ended) {
+          toPlayNext();
+        } else {
+          setPlayProgress(audioRef.current.currentTime)
+        }
+      }
+    }, 1000);
+  }
 
   useEffect(() => {
     resetCanvas();
     return () => {
       stopVisualize()
     }
-  }, []);
+  });
 
   useEffect(() => {
-    const id = setInterval(() => {
-      if (audioRef.current) {
-        const currentTime = audioRef.current.currentTime;
-        const minute = Math.floor(currentTime / 60);
-        const seconds = Math.floor(currentTime % 60);
-        setCurtTime(`${padLeft(minute)}:${padLeft(seconds)}`);
-      }
-    }, 500);
-    return () => window.clearInterval(id);
-  }, []);
+    startTimer();
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  });
 
   return (
     <div className={styles.app}>
@@ -72,7 +98,7 @@ const App: FC = () => {
 
       <div className={styles.playListWrapper}>
         <Header>播放列表</Header>
-        <PlayList playList={playList} playItem={curtAudio} onUpload={onUpload} setPlayItem={setCurtAudio} />
+        <PlayList playList={playList} playItem={curtAudio} onUpload={onUpload} setPlayIndex={setPlayIndex} />
       </div>
     </div>
   )

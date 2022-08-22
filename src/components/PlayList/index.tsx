@@ -5,18 +5,18 @@ import {PlayListItem} from "../../constants";
 interface Props {
   playList: PlayListItem[];
   playItem: PlayListItem;
-  setPlayItem: (playItem: PlayListItem) => void;
+  setPlayIndex: (playIndex: number) => void;
   onUpload: ReactEventHandler<HTMLInputElement>;
 }
 
 const PlayList: FC<Props> = (props) => {
-  const { playList, playItem, setPlayItem, onUpload } = props;
+  const { playList, playItem, setPlayIndex, onUpload } = props;
 
   return (
     <div className={styles.listWrapper}>
       <ul className={styles.list}>
         {playList.map((audio, index) => (
-          <li key={audio.url} className={playItem.url === audio.url ? styles.active : undefined} onClick={() => setPlayItem(audio)}>
+          <li key={audio.url} className={playItem.url === audio.url ? styles.active : undefined} onClick={() => setPlayIndex(index)}>
             {index + 1}. {audio.name}
           </li>
         ))}
