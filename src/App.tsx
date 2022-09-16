@@ -14,7 +14,7 @@ const App: FC = () => {
   const [playList, setPlayList] = useState<PlayListItem[]>(defaultPlayList);
   const [playIndex, setPlayIndex] = useState<number>(0)
 
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<NodeJS.Timer>();
   const audioRef = useRef<HTMLAudioElement>(null);
   const curtAudio = playList[playIndex]
 
