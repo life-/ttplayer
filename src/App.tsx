@@ -43,11 +43,11 @@ const App: FC = () => {
   //   }
   // };
 
-  const setPlayProgress = (currentTime: number) => {
-    const minute = Math.floor(currentTime / 60);
-    const seconds = Math.floor(currentTime % 60);
-    setCurtTime(`${padLeft(minute)}:${padLeft(seconds)}`);
-  }
+  // const setPlayProgress = (currentTime: number) => {
+  //   const minute = Math.floor(currentTime / 60);
+  //   const seconds = Math.floor(currentTime % 60);
+  //   setCurtTime(`${padLeft(minute)}:${padLeft(seconds)}`);
+  // }
 
   const toPlayNext = () => {
     if (playIndex < playList.length - 1) {
