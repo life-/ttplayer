@@ -5,12 +5,12 @@ import {defaultPlayList, PlayListItem} from "./constants";
 import Header from "./components/Header";
 import Player from "./components/Player";
 import PlayList from "./components/PlayList";
-import {padLeft} from "./utils";
+// import {padLeft} from "./utils";
 
 const App: FC = () => {
   const {visualize, stopVisualize, resetCanvas} = useAudioVisualization('#canvas', 50);
 
-  const [curtTime, setCurtTime] = useState<string>('00:00');
+  const [curtTime/*, setCurtTime*/] = useState<string>('00:00');
   const [playList/*, setPlayList*/] = useState<PlayListItem[]>(defaultPlayList);
   const [playIndex, setPlayIndex] = useState<number>(0)
 
