@@ -17,7 +17,7 @@ const Player = React.forwardRef((props: Props, audioRef: Ref<HTMLAudioElement>) 
         <canvas id="canvas" width={500} height={300}/>
       </div>
       <div className={styles.controls}>
-        <audio ref={audioRef} src={playItem.url} onPlay={onPlay} onPause={onPause} controls autoPlay />
+        <audio ref={audioRef} src={playItem.url} onPlay={onPlay} onPause={onPause} controls autoPlay crossOrigin="anonymous" />
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, {FC, ReactEventHandler} from "react";
+import React, {FC,/* ReactEventHandler*/} from "react";
 import styles from "./styles.module.scss";
 import {PlayListItem} from "../../constants";
 
@@ -6,11 +6,19 @@ interface Props {
   playList: PlayListItem[];
   playItem: PlayListItem;
   setPlayIndex: (playIndex: number) => void;
-  onUpload: ReactEventHandler<HTMLInputElement>;
+  // onUpload: ReactEventHandler<HTMLInputElement>;
 }
 
 const PlayList: FC<Props> = (props) => {
-  const { playList, playItem, setPlayIndex, onUpload } = props;
+  // const { playList, playItem, setPlayIndex, onUpload } = props;
+  const { playList, playItem, setPlayIndex } = props;
+
+      // <div className={styles.uploader}>
+      //   <label>
+      //     <span>添加</span>
+      //     <input type="file" onChange={onUpload} accept="audio/*"/>
+      //   </label>
+      // </div>
 
   return (
     <div className={styles.listWrapper}>
@@ -21,12 +29,6 @@ const PlayList: FC<Props> = (props) => {
           </li>
         ))}
       </ul>
-      <div className={styles.uploader}>
-        <label>
-          <span>添加</span>
-          <input type="file" onChange={onUpload} accept="audio/*"/>
-        </label>
-      </div>
     </div>
   )
 }

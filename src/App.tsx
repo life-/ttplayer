@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, FC, useEffect, useRef, useState} from 'react';
+import React, {/*ChangeEventHandler,*/ FC, useEffect, useRef, useState} from 'react';
 import useAudioVisualization from "./hooks/useAudioVisualization";
 import styles from './styles.module.scss';
 import {defaultPlayList, PlayListItem} from "./constants";
@@ -11,7 +11,7 @@ const App: FC = () => {
   const {visualize, stopVisualize, resetCanvas} = useAudioVisualization('#canvas', 50);
 
   const [curtTime, setCurtTime] = useState<string>('00:00');
-  const [playList, setPlayList] = useState<PlayListItem[]>(defaultPlayList);
+  const [playList/*, setPlayList*/] = useState<PlayListItem[]>(defaultPlayList);
   const [playIndex, setPlayIndex] = useState<number>(0)
 
   const intervalRef = useRef<NodeJS.Timer>();
@@ -33,15 +33,15 @@ const App: FC = () => {
     resetCanvas();
   }
 
-  const onUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (e.target.files) {
-      const [file] = e.target.files;
-      const blobUrl = URL.createObjectURL(file);
-      const [filename] = file.name.split('.');
-      setPlayList([...playList, { name: filename, url: blobUrl }])
-      setPlayIndex(playList.length - 1)
-    }
-  };
+  // const onUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
+  //   if (e.target.files) {
+  //     const [file] = e.target.files;
+  //     const blobUrl = URL.createObjectURL(file);
+  //     const [filename] = file.name.split('.');
+  //     setPlayList([...playList, { name: filename, url: blobUrl }])
+  //     setPlayIndex(playList.length - 1)
+  //   }
+  // };
 
   const setPlayProgress = (currentTime: number) => {
     const minute = Math.floor(currentTime / 60);
@@ -65,8 +65,8 @@ const App: FC = () => {
       if (audioRef.current) {
         if (audioRef.current.ended) {
           toPlayNext();
-        } else {
-          setPlayProgress(audioRef.current.currentTime)
+        // } else {
+        //   setPlayProgress(audioRef.current.currentTime)
         }
       }
     }, 1000);
@@ -90,7 +90,7 @@ const App: FC = () => {
     <div className={styles.app}>
       <div className={styles.playerWrapper}>
         <Header>
-          正在播放：{curtAudio.name}
+          正在播放：{playIndex+1} - {curtAudio.name}
           <span style={{ marginLeft: "auto" }}>{curtTime}</span>
         </Header>
         <Player ref={audioRef} onPlay={onPlay} onPause={onPause} playItem={curtAudio} />
@@ -98,7 +98,7 @@ const App: FC = () => {
 
       <div className={styles.playListWrapper}>
         <Header>播放列表</Header>
-        <PlayList playList={playList} playItem={curtAudio} onUpload={onUpload} setPlayIndex={setPlayIndex} />
+        <PlayList playList={playList} playItem={curtAudio} setPlayIndex={setPlayIndex} />
       </div>
     </div>
   )
