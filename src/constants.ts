@@ -28,7 +28,7 @@ export const defaultPlayList: PlayListItem[] = [
     {name: '谢军- 碎心石', url: 'https://files.elmle.net/music/谢军- 碎心石.mp3'},
     {name: '英雄的黎明', url: 'https://files.elmle.net/music/英雄的黎明.mp3'},
     {name: '黑小子', url: 'https://files.elmle.net/music/黑小子.mp3'},
-    {name: '罗密欧与朱丽叶(ROMEO & JULIA)', url: 'https://files.elmle.net/music/罗密欧与朱丽叶(ROMEO & JULIA).mp3'},
+    {name: '罗密欧与朱丽叶(ROMEO & JULIA)', url: 'https://files.elmle.net/music/罗密欧与朱丽叶.mp3'},
     {name: '许嵩-你若成风', url: 'https://files.elmle.net/music/许嵩-你若成风.mp3'},
     {name: '王菲-棋子1', url: 'https://files.elmle.net/music/王菲-棋子1.mp3'},
     {name: 'SHE-中国话', url: 'https://files.elmle.net/music/SHE-中国话.mp3'},
